@@ -17,8 +17,6 @@ docs/EXPERIMENTS.md       Detailed experiment commands and dataset path setup
 scripts/                  Smoke checks and local validation helpers
 ```
 
-Root-level `train.py`, `test.py`, `test_single.py`, `test_video.py`, and `test_temporal_align.py` are compatibility wrappers. Prefer the scripts under `experiments/` for new runs.
-
 ## Environment
 
 Create the environment from the provided Conda file, then install Python requirements if needed:
