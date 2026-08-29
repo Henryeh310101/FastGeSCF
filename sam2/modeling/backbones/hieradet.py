@@ -53,10 +53,12 @@ class MultiScaleAttention(nn.Module):
         self.qkv = nn.Linear(dim, dim_out * 3)
         self.proj = nn.Linear(dim_out, dim_out)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, return_qkv=False) -> torch.Tensor:
         B, H, W, _ = x.shape
         # qkv with shape (B, H * W, 3, nHead, C)
         qkv = self.qkv(x).reshape(B, H * W, 3, self.num_heads, -1)
+        if return_qkv:
+            return qkv
         # q, k, v with shape (B, H * W, nheads, C)
         q, k, v = torch.unbind(qkv, 2)
 
@@ -131,7 +133,7 @@ class MultiScaleBlock(nn.Module):
         if dim != dim_out:
             self.proj = nn.Linear(dim, dim_out)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, return_qkv=False) -> torch.Tensor:
         shortcut = x  # B, H, W, C
         x = self.norm1(x)
 
@@ -146,7 +148,9 @@ class MultiScaleBlock(nn.Module):
             x, pad_hw = window_partition(x, window_size)
 
         # Window Attention + Q Pooling (if stage change)
-        x = self.attn(x)
+        x = self.attn(x, return_qkv)
+        if return_qkv:
+            return x
         if self.q_stride:
             # Shapes have changed due to Q pooling
             window_size = self.window_size // self.q_stride[0]
@@ -298,6 +302,28 @@ class Hiera(nn.Module):
 
         return outputs
 
+    def get_intermediate_layers(self, x, n=1, return_qkv=False, lyr=12):
+        # print(f'Extract qkv from {lyr}-layer.')
+        x = self.patch_embed(x)
+        x = x + self._get_pos_embed(x.shape[1:3])
+        # we return the output tokens from the `n` last blocks
+        output = []
+        for i, blk in enumerate(self.blocks):
+            blk.eval()
+            for name, module in blk.named_modules():
+                if 'norm' in name:
+                    module.training = False
+
+            if return_qkv and i == lyr - 1:
+                qkv = blk(x, return_qkv=True) #
+
+            x = blk(x)
+            
+        if return_qkv:
+            return qkv
+        else:
+            return output
+    
     def get_layer_id(self, layer_name):
         # https://github.com/microsoft/unilm/blob/master/beit/optim_factory.py#L33
         num_layers = self.get_num_layers()
