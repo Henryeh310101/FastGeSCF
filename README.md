@@ -1,10 +1,36 @@
 # FastGeSCF
 
-FastGeSCF is a generalizable scene change detection project that combines SAM2, LightGlue registration, and a trained robust change-mask generator.
+FastGeSCF is a fast scene change detection framework for unaligned robot videos. It follows the paper **Towards Practical Scene Change Detection: A Fast, Unaligned Video Framework via Spatiotemporal Alignment**, combining temporal video alignment with efficient SAM-based change-mask generation.
+
+![FastGeSCF two-stage pipeline](assets/paper/pipeline.png)
+
+## Overview
+
+The project has two stages:
+
+1. Temporal alignment pairs frames from repeated traversals using SALAD visual place recognition descriptors and FastDTW sequence matching.
+2. FastGeSCF detects scene changes on each aligned pair using LightGlue spatial registration, SAM features, a cross-attention pseudo-mask generator, and a grid point filter that prompts SAM only in likely changed regions.
+
+In the paper, FastGeSCF reaches the highest average F1 across the reported SCD benchmarks while reducing average inference time to **0.888 s/pair**, about **7.9x faster** than GeSCF.
+
+![FastGeSCF architecture](assets/paper/architecture.png)
+
+## Paper Results
+
+| Method | VL-CMU-CD | PSCD | Nordland | St Lucia | SF-XL | Avg F1 | Time (s) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| GeSCF | 0.754 | 0.540 | 0.590 | 0.621 | 0.712 | 0.643 | 6.982 |
+| ZSSCD | 0.516 | 0.440 | 0.230 | 0.470 | 0.496 | 0.430 | 10.128 |
+| FastGeSCF | 0.760 | 0.526 | 0.542 | 0.726 | 0.736 | 0.658 | 0.888 |
+
+![FastGeSCF qualitative scene change results](assets/paper/qualitative_results.png)
+
+See [docs/PAPER.md](docs/PAPER.md) for more paper context, temporal-alignment results, ablations, and citation information.
 
 ## Repository Layout
 
 ```text
+assets/paper/             Cropped figures and results from the paper
 experiments/              Runnable experiment entry points
 model/                    FastGeSCF change-detection model
 datasets/                 Dataset loaders and preprocessing helpers
@@ -104,6 +130,17 @@ python experiments/video_change_detection.py --query_dir /path/to/query_frames -
 ```
 
 See [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md) for the full runnable command set.
+
+## Citation
+
+```bibtex
+@inproceedings{yeh2026fastgescf,
+  title = {Towards Practical Scene Change Detection: A Fast, Unaligned Video Framework via Spatiotemporal Alignment},
+  author = {Yeh, Yi-Heng and Huang, Chuan-Yuan and Chen, Kuan-Wen and Lu, Li-Yu},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year = {2026}
+}
+```
 
 ## License Notes
 

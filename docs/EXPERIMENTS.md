@@ -2,6 +2,8 @@
 
 Run commands from the repository root. All experiment scripts support `--device auto`, which selects CUDA when available and falls back to CPU.
 
+For the method overview, paper figures, and reported benchmark tables, see [PAPER.md](PAPER.md).
+
 ## Required Artifacts
 
 LightGlue is an external dependency. Clone it into the repository root:

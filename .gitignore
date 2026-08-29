@@ -36,3 +36,7 @@ checkpoints/*.ckpt
 *-checkpoint.ipynb
 comparison.png
 centroid_heatmap_visualization.png
+
+# Local paper/source artifacts. Commit cropped assets instead.
+IROS26_0406_FI.pdf
+assets/paper/page_*.png
