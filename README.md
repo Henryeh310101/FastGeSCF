@@ -30,7 +30,7 @@ In the paper, FastGeSCF reaches the highest average F1 across the reported SCD b
 See [docs/PAPER.md](docs/PAPER.md) for more paper context, temporal-alignment results, ablations, and citation information.
 
 ## Repository Layout
-
+ [![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B?style=flat-square)](docs/IROS26_0406_FI.pdf)
 ```text
 assets/paper/             Cropped figures and results from the paper
 experiments/              Runnable experiment entry points
