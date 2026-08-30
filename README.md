@@ -74,7 +74,23 @@ Download SAM2.1 checkpoints:
 bash checkpoints/download_ckpts.sh
 ```
 
-FastGeSCF trained weights are expected locally at:
+Download the FastGeSCF trained weights from the GitHub release:
+
+https://github.com/Henryeh310101/FastGeSCF/releases/tag/weights-v1
+
+```bash
+mkdir -p results/RobustViT_vl-cmu-cd results/RobustViT_changesim
+
+curl -L \
+  -o results/RobustViT_vl-cmu-cd/best_model.pth \
+  https://github.com/Henryeh310101/FastGeSCF/releases/download/weights-v1/FastGeSCF_RobustViT_vl-cmu-cd_best_model.pth
+
+curl -L \
+  -o results/RobustViT_changesim/best_model.pth \
+  https://github.com/Henryeh310101/FastGeSCF/releases/download/weights-v1/FastGeSCF_RobustViT_changesim_best_model.pth
+```
+
+After downloading, the trained weights should be available at:
 
 ```text
 results/RobustViT_vl-cmu-cd/best_model.pth
