@@ -1,6 +1,8 @@
 # FastGeSCF
 ![IROS 2026](https://img.shields.io/badge/IROS-2026-0076A8?style=flat-square) [![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B?style=flat-square)](docs/IROS26_0406_FI.pdf)
 
+> [▶ Watch the FastGeSCF video demo (MP4)](assets/fastgescf.mp4)
+
 
 FastGeSCF is a fast scene change detection framework for unaligned robot videos. It follows the paper **Towards Practical Scene Change Detection: A Fast, Unaligned Video Framework via Spatiotemporal Alignment**, combining temporal video alignment with efficient SAM-based change-mask generation.
 
