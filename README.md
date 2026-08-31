@@ -1,6 +1,8 @@
 # FastGeSCF
 ![IROS 2026](https://img.shields.io/badge/IROS-2026-0076A8?style=flat-square) [![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B?style=flat-square)](docs/IROS26_0406_FI.pdf)
 
+![FastGeSCF video demo](assets/fastgescf-demo.gif)
+
 > [▶ Watch the FastGeSCF video demo (MP4)](assets/fastgescf.mp4)
 
 
